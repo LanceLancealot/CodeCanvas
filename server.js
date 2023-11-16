@@ -4,7 +4,29 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const hbs = exphbs.create({});
-const api = require('./controllers/api');
+const routes = require('./controllers');
+
+//Sequelize
+const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+//Session
+const sess = {
+  secret: 'bob ross',
+  cookie: {
+    maxAge: 300000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
+
+app.use(session(sess));
 
 //Handlebars
 app.engine('handlebars', hbs.engine);
@@ -16,15 +38,10 @@ app.use(express.json());
 
 //CSS styles middleware
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
-//Homepage route
-//app.get('/', (req,res) => {
-//    res.render('homepage');
-//})
-
-//API routes
-//app.use('/api', api);
   
+//Routes
+app.use(routes);
+
 app.listen(PORT, () => {
     console.log (`Server running on ${PORT}`)
 });
