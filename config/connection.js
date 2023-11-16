@@ -1,4 +1,5 @@
-const { Sequelize } = require('sequelize');
+const Sequelize = require('sequelize');
+require('dotenv').config();
 
 // Configure database connection
 const sequelize = new Sequelize(
