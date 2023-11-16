@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
+const session = require('express-session');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const hbs = exphbs.create({});
-const routes = require('./controllers');
+//const routes = require('./controllers');
 
 //Sequelize
 const sequelize = require('./config/connection');
@@ -40,7 +41,12 @@ app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
   
 //Routes
-app.use(routes);
+//app.use(routes);
+
+//Homepage route
+app.get('/', (req,res) => {
+    res.render('homepage');
+})
 
 app.listen(PORT, () => {
     console.log (`Server running on ${PORT}`)
