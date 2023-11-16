@@ -30,6 +30,13 @@ Post.init(
             type:DataTypes.BOOLEAN,
             allowNull: false,
         },
+        //id key will be used to join tables
+        user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+              model: 'user',
+              key: 'id',
+        },
     },   
     {
     sequelize,
