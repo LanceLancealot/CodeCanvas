@@ -5,7 +5,7 @@ const session = require('express-session');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const hbs = exphbs.create({});
-//const routes = require('./controllers');
+const routes = require('./controllers');
 
 //Sequelize
 const sequelize = require('./config/connection');
@@ -47,6 +47,6 @@ app.get('/', (req,res) => {
     res.render('homepage');
 })
 
-app.listen(PORT, () => {
-    console.log (`Server running on ${PORT}`)
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log(`Server running on ${PORT}`))
 });
