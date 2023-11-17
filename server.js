@@ -40,8 +40,7 @@ app.use(express.json());
 //CSS styles middleware
 app.use('/public', express.static(path.join(__dirname, 'public')));
   
-//Routes
-//app.use(routes);
+app.use('/', routes);
 
 //Homepage route
 app.get('/', (req,res) => {
