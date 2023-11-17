@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import and use the sub-routers for specific functionalities
-const blogRoutes = require('./blogRoutes');
+const blogRoutes = require('./blogroutes');
 const commentRoutes = require('./commentRoutes');
 const userRoutes = require('./userRoutes');
 

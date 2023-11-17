@@ -2,8 +2,37 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt'); // for password hashing
 const passport = require('passport'); // for user authentication
+const LocalStrategy = require('passport-local').Strategy;
 
-const { User } = require('../models'); // assuming your User model is in models/index.js
+const User = require('./api/userRoutes'); // Import the User model
+
+// ... (other code)
+
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'username',
+    passwordField: 'password',
+  },
+  async (username, password, done) => {
+    try {
+      const user = await User.findOne({ where: { username } });
+
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+
+      const isValidPassword = await user.validPassword(password);
+
+      if (!isValidPassword) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
 
 router.get('/login', (req, res) => {
   res.render('login'); // Assuming you have a login.handlebars view
@@ -58,5 +87,72 @@ const isAuthenticated = (req, res, next) => {
 router.get('/dashboard', isAuthenticated, (req, res) => {
   res.render('dashboard', { user: req.user }); // assuming you are using handlebars and passing user information to the view
 });
+
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'username',
+    passwordField: 'password',
+  },
+  async (username, password, done) => {
+    try {
+      const user = await User.findOne({ where: { username } });
+
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+
+      const isValidPassword = await user.validPassword(password);
+
+      if (!isValidPassword) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findByPk(id);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
+
+
+
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'username',
+    passwordField: 'password',
+  },
+  async (username, password, done) => {
+    try {
+      const user = await User.findOne({ where: { username } });
+
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+
+      const isValidPassword = await user.validPassword(password);
+
+      if (!isValidPassword) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
 
 module.exports = router;
