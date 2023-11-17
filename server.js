@@ -5,7 +5,10 @@ const session = require('express-session');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const hbs = exphbs.create({});
-//const routes = require('./controllers');
+const routes = require('./controllers');
+const passport = require('passport');
+const userRoutes = require('./controllers/api/userRoutes');
+
 
 //Sequelize
 const sequelize = require('./config/connection');
@@ -29,6 +32,9 @@ const sess = {
 
 app.use(session(sess));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Handlebars
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -41,12 +47,13 @@ app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
   
 app.use('/', routes);
+app.use('/user', routes);
 
 //Homepage route
 app.get('/', (req,res) => {
     res.render('homepage');
 })
 
-app.listen(PORT, () => {
-    console.log (`Server running on ${PORT}`)
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 });
