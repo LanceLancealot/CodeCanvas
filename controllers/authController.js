@@ -5,6 +5,14 @@ const passport = require('passport'); // for user authentication
 
 const { User } = require('../models'); // assuming your User model is in models/index.js
 
+router.get('/login', (req, res) => {
+  res.render('login'); // Assuming you have a login.handlebars view
+});
+
+router.get('/signup', (req, res) => {
+  res.render('signup'); // Assuming you have a signup.handlebars view
+});
+
 // Registration route
 router.post('/signup', async (req, res) => {
   try {
