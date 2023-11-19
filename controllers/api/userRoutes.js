@@ -11,15 +11,27 @@ router.get('/login', (req, res) => {
 });
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ where: { username } }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
+  async function(username, password, done) {
+    try {
+      const user = await User.findOne({ where: { username } });
+
+      if (!user) {
+        return done(null, false);
+      }
+
+      const isPasswordValid = await user.verifyPassword(password);
+
+      if (!isPasswordValid) {
+        return done(null, false);
+      }
+
       return done(null, user);
-    });
+    } catch (error) {
+      return done(error);
+    }
   }
 ));
+
 
 // Login route - Handle login form submission
 router.post('/login', passport.authenticate('local', {
