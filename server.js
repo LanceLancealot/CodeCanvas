@@ -47,7 +47,7 @@ app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
   
 app.use('/', routes);
-app.use('/user', userRoutes);
+app.use('/user', routes);
 
 //Homepage route
 app.get('/', (req,res) => {
