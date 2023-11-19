@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
@@ -8,6 +9,17 @@ const { User } = require('../../models');
 router.get('/login', (req, res) => {
   res.render('login'); // Assuming you have a login.handlebars view
 });
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ where: { username } }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
 
 // Login route - Handle login form submission
 router.post('/login', passport.authenticate('local', {
