@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3000;
 const hbs = exphbs.create({});
 const routes = require('./controllers');
 const passport = require('passport');
-const userRoutes = require('./controllers/api/userRoutes');
 
 
 //Sequelize
@@ -47,7 +46,6 @@ app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
   
 app.use('/', routes);
-app.use('/user', routes);
 
 //Homepage route
 app.get('/', (req,res) => {

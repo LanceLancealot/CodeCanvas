@@ -1,26 +1,37 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
-const sequelize = require('../../config/connection');
-const { DataTypes } = require('sequelize');
-const User = sequelize.define('User', {
-  // other fields...
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+const { User } = require('../../models');
+
+// Login route - Display login form
+router.get('/login', (req, res) => {
+  res.render('login'); // Assuming you have a login.handlebars view
 });
 
-User.prototype.validPassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
+passport.use(new LocalStrategy(
+  async function(username, password, done) {
+    try {
+      const user = await User.findOne({ where: { username } });
 
-module.exports = User;
+      if (!user) {
+        return done(null, false);
+      }
+
+      const isPasswordValid = await user.verifyPassword(password);
+
+      if (!isPasswordValid) {
+        return done(null, false);
+      }
+
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
+
 
 // Login route - Handle login form submission
 router.post('/login', passport.authenticate('local', {
@@ -28,6 +39,11 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true,
 }));
+
+// Signup route - Display signup form
+router.get('/signup', (req, res) => {
+  res.render('signup'); // Assuming you have a signup.handlebars view
+});
 
 // Signup route - Handle signup form submission
 router.post('/signup', async (req, res) => {
@@ -57,8 +73,6 @@ router.post('/signup', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-
 
 // Other user-related routes can be added here
 
