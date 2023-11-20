@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 //Uses sequelize extending model method, checks if password hash matches using compareSync
 class User extends Model {
-    checkPassword(loginPw) {
+    verifyPassword(loginPw) {
       return bcrypt.compareSync(loginPw, this.password);
     }
   }
