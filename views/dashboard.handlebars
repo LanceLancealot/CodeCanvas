@@ -9,15 +9,19 @@
 </head>
 
 <body>
-    <header>
+    <header class="dashboard-header">
         <h1>Dashboard</h1>
     </header> 
 
-    <section class="container">
-        <article>
+    <section class="container dashboard-content">
+        <article class="dashboard-post">
             <h2>Your Dashboard</h2>
             <p>Welcome to your personal dashboard. Here, you can manage your blog posts.</p>
-            <!-- Your dashboard content goes here -->
+            <ul>
+                {{#each userPosts}}
+                <li>{{title}} - {{content}}</li>
+                {{/each}}
+            </ul>
         </article>
     </section>
 
