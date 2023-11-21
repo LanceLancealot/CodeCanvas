@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt'); // for password hashing
-const passport = require('passport'); // for user authentication
+const withAuth = require('../utils/auth')
+// const passport = require('passport'); // for user authentication
 
 const { User } = require('../models'); // assuming your User model is in models/index.js
 
@@ -10,25 +11,41 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
-
+    
+    const userData = await User.findOne({ where: { username: req.body.username } });
+    console.log(userData, 'username');
     if (!userData) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .json({ message: 'Incorrect uername, please try again' });
       return;
     }
+    console.log(userData.verifyPassword(req.body.password))
 
     const validPassword = await userData.verifyPassword(req.body.password);
+    
+    console.log(validPassword, 'password');
 
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .json({ message: 'Incorrect password, please try again' });
       return;
     }
+    router.post('/', async (req, res) => {
+  try {
+    const userData = await User.create(req.body);
 
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
@@ -36,10 +53,6 @@ router.post('/login', async (req, res) => {
       res.json({ user: userData, message: 'You are now logged in!' });
       res.redirect('/dashboard');
     });
-
-  } catch (err) {
-    res.status(400).json(err);
-  }
 });
 
 
@@ -51,12 +64,11 @@ router.get('/signup', (req, res) => {
 router.post('/signup', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user in the database
     const newUser = await User.create({
       username,
-      password: hashedPassword,
+      password,
     });
 
     // Redirect to login page after successful registration
