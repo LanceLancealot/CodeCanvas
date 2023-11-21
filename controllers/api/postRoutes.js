@@ -27,6 +27,29 @@ router.get('/dashboard', async (req, res) => {
 
 });
 
+router.post('/dashboard', async (req, res) => {
+  try {
+    const { title, content } = req.body; // Assuming your post data comes in the request body
+
+    // Assuming you have a user ID stored in the session after login
+    const userId = req.session.user_id; // Adjust this based on your authentication setup
+
+    // Create a new post in the database
+    const newPost = await Post.create({
+      title,
+      content,
+      userId, // Set the user ID for the post
+    });
+
+    // Redirect to the dashboard or send a success response
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 // Other blog-related routes can be added here
 
 module.exports = router;
