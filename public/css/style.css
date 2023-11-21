@@ -8,8 +8,8 @@ body, h1, h2, h3, p, ul, ol {
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    background-color: #242831; /* Background Color */
-    color: #BCBFC6; /* Text Color */
+    background-color: #242831;
+    color: #BCBFC6;
 }
 
 .container {
@@ -19,30 +19,30 @@ body {
 
 /* Header styles */
 header {
-    background-color: #333743; /* Header Color */
-    color: #A09FA5; /* Header Text Color */
+    background-color: #333743;
+    color: #A09FA5;
     padding: 10px 0;
 }
 
 /* Navigation styles */
 nav {
-    background-color: #5A6988; /* Sidebar Color */
+    background-color: #5A6988;
     padding: 10px 0;
     text-align: center;
 }
 
 nav a {
-    color: #BCBFC6; /* Sidebar Text Color */
+    color: #BCBFC6;
     text-decoration: none;
     padding: 10px;
-    border: 1px solid #333743; /* Sidebar Border Color */
+    border: 1px solid #333743;
     margin: 0 5px;
     display: inline-flex;
 }
 
 nav a:hover {
     text-decoration: underline;
-    background-color: #3F4A60; /* Hover Color */
+    background-color: #3F4A60;
 }
 
 /* Main content styles */
@@ -51,16 +51,16 @@ section {
 }
 
 article {
-    border: 1px solid #333743; /* Article Border Color */
-    background-color: #242831; /* Article Background Color */
+    border: 1px solid #333743;
+    background-color: #242831;
     padding: 20px;
     margin-bottom: 20px;
 }
 
 /* Footer styles */
 footer {
-    background-color: #333743; /* Footer Color */
-    color: #BCBFC6; /* Footer Text Color */
+    background-color: #333743;
+    color: #BCBFC6;
     text-align: center;
     padding: 10px 0;
 }
@@ -72,7 +72,11 @@ footer {
         align-items: center;
     }
 
-    /* Responsive styles for Dashboard */
+    section {
+        padding: 15px;
+    }
+
+    /* Dashboard styles for small screens */
     .dashboard-content {
         padding: 15px;
     }
@@ -80,26 +84,64 @@ footer {
 
 /* Dashboard styles */
 .dashboard-header {
-    background-color: #1E242C; /* Dashboard Header Background Color */
-    color: #61dafb; /* Dashboard Header Text Color */
+    background-color: #1E242C;
+    color: #61dafb;
     padding: 15px;
     text-align: center;
 }
 
 .dashboard-content {
-    background-color: #333743; /* Dashboard Content Background Color */
-    color: #BCBFC6; /* Dashboard Content Text Color */
+    background-color: #333743;
+    color: #BCBFC6;
     padding: 20px;
     margin-top: 20px;
 }
 
 .dashboard-post {
-    border: 1px solid #1E242C; /* Dashboard Post Border Color */
-    background-color: #242831; /* Dashboard Post Background Color */
+    border: 1px solid #1E242C;
+    background-color: #242831;
     padding: 15px;
     margin-bottom: 15px;
 }
 
 .dashboard-post h3 {
-    color: #61dafb; /* Dashboard Post Title Color */
+    color: #61dafb;
+}
+
+/* New Post Form styles */
+.dashboard-form {
+    background-color: #242831;
+    border: 1px solid #1E242C;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.dashboard-form label {
+    color: #61dafb;
+    font-weight: bold;
+}
+
+.dashboard-form input,
+.dashboard-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #1E242C;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333743;
+    color: #BCBFC6;
+}
+
+.dashboard-form button {
+    background-color: #61dafb;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dashboard-form button:hover {
+    background-color: #3F4A60;
 }
