@@ -2,9 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { Post, User } = require('../../models');
 
+router.post('/post', async (req, res) => {
+    const { title, content } = req.body;
+
+    // Create a new user in the database
+    const newPost = await Post.create({
+      title,
+      content,
+      user_id:req.session.user_id,
+})});
+
 // Dashboard route - Display posts
 router.get('/dashboard', async (req, res) => {
-  try {
     // Assuming you have a user ID stored in the session after login
     const userId = req.session.user_id; // Adjust this based on your authentication setup
 
@@ -15,10 +24,7 @@ router.get('/dashboard', async (req, res) => {
     });
 
     res.render('dashboard', { userPosts });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
+
 });
 
 // Other blog-related routes can be added here
