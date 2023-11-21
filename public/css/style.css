@@ -1,8 +1,10 @@
+/* Reset styles */
 body, h1, h2, h3, p, ul, ol {
     margin: 0;
     padding: 0;
 }
 
+/* Global styles */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
@@ -15,12 +17,14 @@ body {
     margin: 0 auto;
 }
 
+/* Header styles */
 header {
     background-color: #333743; /* Header Color */
     color: #A09FA5; /* Header Text Color */
     padding: 10px 0;
 }
 
+/* Navigation styles */
 nav {
     background-color: #5A6988; /* Sidebar Color */
     padding: 10px 0;
@@ -41,6 +45,7 @@ nav a:hover {
     background-color: #3F4A60; /* Hover Color */
 }
 
+/* Main content styles */
 section {
     margin: 20px 0;
 }
@@ -52,6 +57,7 @@ article {
     margin-bottom: 20px;
 }
 
+/* Footer styles */
 footer {
     background-color: #333743; /* Footer Color */
     color: #BCBFC6; /* Footer Text Color */
@@ -65,4 +71,35 @@ footer {
         flex-direction: column;
         align-items: center;
     }
+
+    /* Responsive styles for Dashboard */
+    .dashboard-content {
+        padding: 15px;
+    }
+}
+
+/* Dashboard styles */
+.dashboard-header {
+    background-color: #1E242C; /* Dashboard Header Background Color */
+    color: #61dafb; /* Dashboard Header Text Color */
+    padding: 15px;
+    text-align: center;
+}
+
+.dashboard-content {
+    background-color: #333743; /* Dashboard Content Background Color */
+    color: #BCBFC6; /* Dashboard Content Text Color */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.dashboard-post {
+    border: 1px solid #1E242C; /* Dashboard Post Border Color */
+    background-color: #242831; /* Dashboard Post Background Color */
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.dashboard-post h3 {
+    color: #61dafb; /* Dashboard Post Title Color */
 }
