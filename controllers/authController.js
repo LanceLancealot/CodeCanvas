@@ -13,18 +13,14 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     
     const userData = await User.findOne({ where: { username: req.body.username } });
-    console.log(userData, 'username');
     if (!userData) {
       res
         .status(400)
         .json({ message: 'Incorrect uername, please try again' });
       return;
     }
-    console.log(userData.verifyPassword(req.body.password))
 
     const validPassword = await userData.verifyPassword(req.body.password);
-    
-    console.log(validPassword, 'password');
 
     if (!validPassword) {
       res
@@ -49,9 +45,8 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      
-      res.json({ user: userData, message: 'You are now logged in!' });
       res.redirect('/dashboard');
+      return;
     });
 });
 
@@ -87,7 +82,7 @@ router.get('/logout', (req, res) => {
 
 // Middleware to check if a user is authenticated
 const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  if (req.session.logged_in) {
     return next();
   }
   res.redirect('/login');

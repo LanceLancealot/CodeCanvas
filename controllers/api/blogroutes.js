@@ -6,7 +6,7 @@ const { Post, User } = require('../../models');
 router.get('/dashboard', async (req, res) => {
   try {
     // Assuming you have a user ID stored in the session after login
-    const userId = req.user.id; // Adjust this based on your authentication setup
+    const userId = req.session.user_id; // Adjust this based on your authentication setup
 
     // Fetch posts for the logged-in user from the database
     const userPosts = await Post.findAll({
