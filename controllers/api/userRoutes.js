@@ -6,27 +6,27 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
 
-passport.use(new LocalStrategy(
-  async function(username, password, done) {
-    try {
-      const user = await User.findOne({ where: { username } });
+// passport.use(new LocalStrategy(
+//   async function(username, password, done) {
+//     try {
+//       const user = await User.findOne({ where: { username } });
 
-      if (!user) {
-        return done(null, false);
-      }
+//       if (!user) {
+//         return done(null, false);
+//       }
 
-      const isPasswordValid = await user.verifyPassword(password);
+//       const isPasswordValid = await user.verifyPassword(password);
 
-      if (!isPasswordValid) {
-        return done(null, false);
-      }
+//       if (!isPasswordValid) {
+//         return done(null, false);
+//       }
 
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
-  }
-));
+//       return done(null, user);
+//     } catch (error) {
+//       return done(error);
+//     }
+//   }
+// ));
 
 
 // Login route - Handle login form submission
