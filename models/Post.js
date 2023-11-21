@@ -1,7 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/connection');
-//Password hashing
-const bcrypt = require('bcrypt');
 
 //Uses sequelize extending model method, checks if password hash matches using compareSync
 class Post extends Model {}
@@ -18,16 +16,8 @@ Post.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        code: {
+        content: {
             type:DataTypes.STRING,
-            allowNull: false,
-        },
-        description: {
-            type:DataTypes.STRING,
-            allowNull: false,
-        },
-        public: {
-            type:DataTypes.BOOLEAN,
             allowNull: false,
         },
         //id key will be used to join tables
